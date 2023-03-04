@@ -9,3 +9,4 @@ użytkownik, gość. Użytkownik bedzie miał możliwosć do wykupienia/wypożyc
 serwisu, natomiast gość będzie mógł jedynie przeglądać serwis jak i przykładowa stronę/moment wybranego tytułu. Zostanie utworzona baza
 x dzieł sztuki, na stronie będzie możliwośc filtracji poprzez kolejność alfabetyczna, kategorię, cenę + search bar. Przeprowadzone
 zostaną testy w celu stabilności strony. Możliwość weryfikacji dwuetapowej.
+Technologie planowane do użycia: HTML, CSS, JS, Python, SQL, Django/Flask
