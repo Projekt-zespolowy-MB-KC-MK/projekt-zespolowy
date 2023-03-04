@@ -1,1 +1,2 @@
 # projekt-zespolowy
+# Mateusz Kowalski
