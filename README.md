@@ -1,13 +1,6 @@
 # projekt-zespolowy
 # Mateusz Kowalski, Mariusz Byczek, Kacper Chadzyjanidis
 
-what why how
-
-Porównywarka cenowa kryptowalut
-
-Biblioteka
-
-wypożyczalnia filmów online
 
 1. Projekt wirtualnej biblioteki
 Stworzenie aplikacji webowej umożliwiającej ww. czynności.
