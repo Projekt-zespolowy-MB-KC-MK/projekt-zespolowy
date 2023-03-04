@@ -9,7 +9,7 @@ Biblioteka
 
 wypożyczalnia filmów online
 
-1. Projekt wirtualnej księgarni/biblioteki/wypozyczalni filmow
+1. Projekt wirtualnej biblioteki
 Stworzenie aplikacji webowej umożliwiającej ww. czynności.
 Aplikacja zostanie podłączona do bazy danych(oraz wrzucona na serwer - czy lokalny?). Bedą 3 rodzaje kont tj. administrator/założyciel, 
 użytkownik, gość. Użytkownik bedzie miał możliwosć do wykupienia/wypożyczenia jakiegokolwiek tytułu max 5 oraz do wiekszości możliwości
