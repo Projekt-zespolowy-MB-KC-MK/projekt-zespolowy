@@ -1,4 +1,3 @@
 # projekt-zespolowy
-# Mateusz Kowalski
-# Mariusz Byczek
-# Kacper Chadzyjanidis
+# Mateusz Kowalski, Mariusz Byczek, Kacper Chadzyjanidis
+
