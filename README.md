@@ -1,5 +1,4 @@
 # projekt-zespolowy
-# Mateusz Kowalski, Mariusz Byczek, Kacper Chadzyjanidis
 
 
 1. Projekt wirtualnej biblioteki
