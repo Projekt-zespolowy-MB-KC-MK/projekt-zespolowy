@@ -102,3 +102,84 @@ class Library:
             self.conn.commit()
 
             return Borrow(borrow_id, borrower.borrower_id, book.book_id, borrow_date, borrow_time, due_time)
+
+    def get_all_borrowed_books(self, limit=None):
+        query = '''
+            SELECT *
+            FROM borrowed_books
+
+        '''
+        if limit is not None:
+            query += f' LIMIT {limit}'
+
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()
+        borrows = []
+        for result in results:
+            borrow_id = result[0]
+            borrower_id = result[1]
+            book_id = result[2]
+            borrow_date = datetime.strptime(result[3], '%Y-%m-%d').date()
+            borrow_time = datetime.strptime(result[4], '%H:%M:%S').time()
+            due_time = datetime.strptime(result[5], '%Y-%m-%d').date()
+
+            borrow = Borrow(borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
+            borrow.print_info()
+            borrows.append(borrow)
+
+        return borrows
+
+    def get_all_borrowers(self, limit=None):
+        query = '''
+            SELECT *
+            FROM borrowers
+        '''
+        if limit is not None:
+            query += f' LIMIT {limit}'
+
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()
+        borrowers = []
+        for result in results:
+            borrower = Borrower(result[0], result[1], result[2], result[3], result[4])
+            borrower.print_info()
+            borrowers.append(borrower)
+        return borrowers
+
+    def get_all_books(self, limit=None):
+        query = '''
+            SELECT *
+            FROM books
+        '''
+        if limit is not None:
+            query += f' LIMIT {limit}'
+
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()
+        books = []
+        for result in results:
+            book_id, isbn, genre, title, author, published = result
+            book = Book(book_id, isbn, genre, title, author, published)
+            book.print_info()
+            books.append(book)
+        return books
+
+    def get_borrower_by_id(self, borrower_id):
+        self.cursor.execute('SELECT * FROM borrowers WHERE borrower_id = ?', (borrower_id,))
+        result = self.cursor.fetchone()
+        if result is not None:
+            borrower = Borrower(result[0], result[1], result[2], result[3], result[4])
+            return borrower
+        else:
+            print("Borrower not found")
+            return None
+
+    def get_book_by_id(self, book_id):
+        self.cursor.execute('SELECT * FROM books WHERE id = ?', (book_id,))
+        result = self.cursor.fetchone()
+        if result is not None:
+            book = Book(result[0], result[1], result[2], result[3], result[4], result[5])
+            return book
+        else:
+            print("Book not found")
+            return None
