@@ -22,3 +22,17 @@ main.py służy do testowania
 populate_db.create_test_data(library) 
 
 wypełnia bibliotekę przykładowymi wpisami
+
+#UWAGI DLA TYCH KTÓRZY BEDA ROBIC FRONTEND:
+
+zainicjuj obiekt typu Library
+
+o ile nie wypełnisz biblioteki jakimś testowymi danymi będzie ona pusta: 
+populate_db.create_test_data(library)
+
+wszystko co potrzebujesz jest w library.py
+
+metody które się tam znajdują obsługują najczęsciej wymagane czynności jak dodanie nowego wypożyczającego, nowej książki (pamiętaj o unikatowych ID!), także wypożyczenie,
+oddanie, listowanie wszystkich ksiązek listowanie wypożyczających znajdz wypozyczajacego czy ksiązkę po id
+
+musisz zbudować jakiś interfejs dla pracowników biblioteki. W backendzie mamy obiekt administrator. W bazie danych jest hasło admina
