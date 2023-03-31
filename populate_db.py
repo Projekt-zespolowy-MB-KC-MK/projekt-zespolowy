@@ -42,3 +42,4 @@ def create_test_data(library):
     # Wyświetlenie informacji o wypożyczeniach
     #print(f'Borrower 1 borrowed {borrow1_book1.book.title} and {borrow1_book2.book.title}')
     #print(f'Borrower 2 borrowed {borrow2_book1.book.title}')
+
