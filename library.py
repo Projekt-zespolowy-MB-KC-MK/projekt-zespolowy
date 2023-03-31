@@ -4,6 +4,7 @@ import uuid
 from borrower import Borrower
 from book import Book
 from borrow import Borrow
+from administrator import Administrator
 
 
 class Library:
@@ -15,11 +16,23 @@ class Library:
         # Create borrowers table if it doesn't exist
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS borrowers (
-                borrower_id INTEGER PRIMARY KEY,
+                user_id INTEGER PRIMARY KEY,
                 name TEXT,
                 surname TEXT,
                 phone_number TEXT,
                 email TEXT
+            )
+        ''')
+
+        # Create administratrs table if it doesn't exist
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS admistrators (
+                user_id INTEGER PRIMARY KEY,
+                name TEXT,
+                surname TEXT,
+                phone_number TEXT,
+                email TEXT,
+                password TEXT
             )
         ''')
 
@@ -48,11 +61,21 @@ class Library:
                 FOREIGN KEY (book_id) REFERENCES books (id)
             )
         ''')
+
     def add_borrower(self, borrower):
         self.cursor.execute('''
-            INSERT INTO borrowers (name, surname, phone_number, email)
-            VALUES (?, ?, ?, ?)
-        ''', (borrower.name, borrower.surname, borrower.phone_number, borrower.email))
+            INSERT INTO borrowers (user_id, name, surname, phone_number, email)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (borrower.user_id, borrower.name, borrower.surname, borrower.phone_number, borrower.email))
+
+        self.conn.commit()
+
+    def add_administrator(self, administrator):
+        self.cursor.execute('''
+            INSERT INTO administrators (user_id, name, surname, phone_number, email, password)
+            VALUES (?, ?, ?, ?, ?,?)
+        ''', (administrator.user_id, administrator.surname, administrator.phone_number, administrator.email,
+              administrator.password))
 
         self.conn.commit()
 
@@ -76,7 +99,7 @@ class Library:
     def borrower_returns_book(self, borrower, book):
         borrower.return_book(book)
         book.return_book()
-        self.cursor.execute("DELETE FROM borrowed_books WHERE borrower_id = ? AND book_id = ?", (borrower.id, book.id))
+        self.cursor.execute("DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?", (borrower.id, book.id))
         self.cursor.execute("UPDATE books SET is_available = 1 WHERE id = ?", (book.id,))
         self.conn.commit()
 
@@ -97,11 +120,11 @@ class Library:
             self.cursor.execute("""
                 INSERT INTO borrowed_books (borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
                 VALUES (?, ?, ?, ?, ?, ?)
-            """, (borrow_id, borrower.borrower_id, book.book_id, borrow_date, borrow_time, due_time))
+            """, (borrow_id, borrower.user_id, book.book_id, borrow_date, borrow_time, due_time))
 
             self.conn.commit()
 
-            return Borrow(borrow_id, borrower.borrower_id, book.book_id, borrow_date, borrow_time, due_time)
+            return Borrow(borrow_id, borrower.user_id, book.book_id, borrow_date, borrow_time, due_time)
 
     def get_all_borrowed_books(self, limit=None):
         query = '''
@@ -172,6 +195,16 @@ class Library:
             return borrower
         else:
             print("Borrower not found")
+            return None
+
+    def get_administrator_by_id(self, admin_id):
+        self.cursor.execute('SELECT * FROM adminstrators WHERE user_id = ?', (admin_id,))
+        result = self.cursor.fetchone()
+        if result is not None:
+            admin = Administrator(result[0], result[1], result[2], result[3], result[4], result[4])
+            return admin
+        else:
+            print("Admin not found")
             return None
 
     def get_book_by_id(self, book_id):
