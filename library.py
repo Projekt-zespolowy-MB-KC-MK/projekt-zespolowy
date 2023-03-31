@@ -63,14 +63,44 @@ class Library:
         ''')
 
     def add_borrower(self, borrower):
+        self.cursor.execute('SELECT COUNT(*) FROM borrowers WHERE user_id = ?', (borrower.user_id,))
+        count = self.cursor.fetchone()[0]
+
+        if count > 0:
+            print("Borrower with this user ID already exists.")
+            return None
+
+        self.cursor.execute('SELECT COUNT(*) FROM borrowers WHERE name = ? AND surname = ?', (borrower.name, borrower.surname))
+        count = self.cursor.fetchone()[0]
+
+        if count > 0:
+            print("Borrower with this name and surname already exists.")
+            return None
+
         self.cursor.execute('''
             INSERT INTO borrowers (user_id, name, surname, phone_number, email)
             VALUES (?, ?, ?, ?, ?)
         ''', (borrower.user_id, borrower.name, borrower.surname, borrower.phone_number, borrower.email))
 
         self.conn.commit()
+        print("Borrower added successfully.")
 
     def add_administrator(self, administrator):
+        self.cursor.execute('SELECT COUNT(*) FROM administrators WHERE user_id = ?', (administrator.user_id,))
+        count = self.cursor.fetchone()[0]
+
+        if count > 0:
+            print("Administrator with this user ID already exists.")
+            return None
+
+        self.cursor.execute('SELECT COUNT(*) FROM administrator WHERE name = ? AND surname = ?',
+                            (administrator.name, administrator.surname))
+        count = self.cursor.fetchone()[0]
+
+        if count > 0:
+            print("Borrower with this name and surname already exists.")
+            return None
+
         self.cursor.execute('''
             INSERT INTO administrators (user_id, name, surname, phone_number, email, password)
             VALUES (?, ?, ?, ?, ?,?)
@@ -78,6 +108,7 @@ class Library:
               administrator.password))
 
         self.conn.commit()
+        print("Administrator added successfully.")
 
     def add_book(self, book):
         self.cursor.execute('''
@@ -168,6 +199,32 @@ class Library:
             borrower.print_info()
             borrowers.append(borrower)
         return borrowers
+
+    def get_all_users_borrowed_books(self, user_id):
+        query = '''
+            SELECT *
+            FROM borrowed_books
+            INNER JOIN borrowers ON borrowed_books.borrower_id = borrowers.user_id
+            WHERE borrowers.user_id = ?
+        '''
+
+        self.cursor.execute(query, (user_id,))
+        results = self.cursor.fetchall()
+
+        borrows = []
+        for result in results:
+            borrow_id = result[0]
+            borrower_id = result[1]
+            book_id = result[2]
+            borrow_date = datetime.strptime(result[3], '%Y-%m-%d').date()
+            borrow_time = datetime.strptime(result[4], '%H:%M:%S').time()
+            due_time = datetime.strptime(result[5], '%Y-%m-%d').date()
+
+            borrow = Borrow(borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
+            borrow.print_info()
+            borrows.append(borrow)
+
+        return borrows
 
     def get_all_books(self, limit=None):
         query = '''
