@@ -14,3 +14,11 @@ JS
 
 Jak go dowieziemy, to bedziemy stopniowo dodawać nowe ficzery jak np usuwanie ksiązek, wypożyczających. Poszukiwanie ksiązek, wypożyczających. 
 Możliwość przeglądania swoich danych przez wypożyczającego. Notyfikacje o terminie upływu itd 
+
+
+
+main.py służy do testowania
+
+populate_db.create_test_data(library) 
+
+wypełnia bibliotekę przykładowymi wpisami
