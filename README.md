@@ -38,5 +38,16 @@ użytkownik może edytować wpis dotyczący wypożyczającego. Jeżeli poda istn
 Tutaj wpisując ID wypożyczającego otrzymamy jego kartę z jego danymi osobowymi oraz z listą wypożyczonych książek. Książki których termin oddania został przekroczony zostaną wizualnie wyróżnione. Znajduje się również tam przycisk wypożycz który przekieruje do formularza wypożyczenia. Należy uzupełnić dane wypożyczenia aby zdarzenie wypożyczenia zostało zapisane do bazy danych
 
 
+#Notatki developera:
 
+w repozytorium nie ma gotowej bazy danych. Użyj create_test_data() z modułu populate_db aby zasiedlić bazę danych przykładowymi wpisami
 
+baza danych składa się z 4ch tablic:
+
+1.Borrowers: przechowuje rekordy wypożyczających
+
+2.Books: przechowuje rekordy książk
+
+3.Administrators: przechowuje rekordy z danymi pracowników biblioteki łącznie z hasłami
+
+4.Borrows: przechowuje informacje o tym kto wypożyczył jaką książkę
