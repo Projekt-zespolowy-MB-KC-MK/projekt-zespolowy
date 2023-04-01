@@ -51,7 +51,3 @@ baza danych składa się z 4ch tablic:
 3.Administrators: przechowuje rekordy z danymi pracowników biblioteki łącznie z hasłami
 
 4.Borrows: przechowuje informacje o tym kto wypożyczył jaką książkę
-
-
-
-
