@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+}
+
+body{
+    background-color: grey;
+}
+
+/* header structure */
+header {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    
+}
+
+header a{
+    text-decoration: none; color: white;
+}
+
+.home{
+    margin: 10px;
+    text-align: center;
+    height: auto;
+}
+.home h1{
+    border: 0px solid white;
+    width: 300px;
+    margin: auto;
+    font-size: 46px;
+}
+
+.acnt {
+    float: right;
+    margin: auto 20px;
+    font-size: 24px;
+}
+
+.main {
+    width: 80%;
+    border: 0px solid white;
+    margin: auto;
+}
+
+/* nav structure */
+nav {height: 50px;
+    width: 100%;
+    border: 0px solid black;
+    margin: auto;
+    background-color: rgb(245, 222, 179);
+}
+nav input{
+    width: 275px;
+    height: 100%;
+    margin: 0 10px 0 10px;
+    background-color: rgba(194, 112, 49, 0.3);
+    border: none;
+}
+
+nav input:hover{
+    background-color: rgb(255, 213, 135);
+    cursor: pointer;
+}
+
+.left, .right, .center{
+    height: 100%;
+    text-align: center;
+    float: left;
+}
+
+/* aside structure */
+aside {
+    height: 500px;
+    width: 20%;
+    border: 1px solid black;
+    text-align: center;
+    position: absolute;
+}
+
+/* section structure */
+section {
+    height: 500px;
+    width: 74%;
+    margin: auto;
+    position: relative;
+    border: 1px solid white;
+    float: right;
+    text-align: center;
+}
+
+section table{
+    margin: 0 auto;
+    padding: 0 20px;
+}
