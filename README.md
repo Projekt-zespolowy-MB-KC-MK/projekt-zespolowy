@@ -1,38 +1,42 @@
 # projekt-zespolowy
 
-Biblioteka. Mamy panel administracyjny dla pracownika biblioteki. Wypożyczający fizycznie wybiera książke z półki i przynosi pokazać ją 
+#OPROGRAMOWANIE BIBLIOTEKI
+
+Przedmiotem niniejszego projektu jest stworzenie aplikacji dla pracowników biblioteki która zautomatyzowałaby proces przechowywania danych o książkach, wypożyczających i wypożyczeniach. Zastępując tradycyjne karty biblioteczne.
+
+Mamy panel administracyjny dla pracownika biblioteki. Wypożyczający fizycznie wybiera książke z półki i przynosi pokazać ją 
 pracownikowi. Po kodzie ID książki i zarejestrowanego wypożyczającego tworzymy wpis w bazie o wypożyczeniu wraz z terminem zwrotu. Teraz 
-wypożyczający może zabrać książkę. Na razie wypożyczajacy nie ma możliwości dostepu do systemu i np. sprawdzenia swojej historii terminów itp. 
-ale można to dodać później. Wypożyczający może również oddawać ksiązki wtedy wpis z tablicy wypożyczeń znika. W panelu administracyjnym można 
-dodawać książki i użytkowników. Tak wygląda kształt MINIMALNY projektu. 
+wypożyczający może zabrać książkę. Wypożyczający może również oddawać ksiązki wtedy wpis z tablicy wypożyczeń znika. W panelu administracyjnym można 
+dodawać książki i użytkowników.
+
+Wykorzystujemy następujące technologie:
+
 Python
-SQL
-Django/Flask
-HTML
-CSS
-JS
 
-Jak go dowieziemy, to bedziemy stopniowo dodawać nowe ficzery jak np usuwanie ksiązek, wypożyczających. Poszukiwanie ksiązek, wypożyczających. 
-Możliwość przeglądania swoich danych przez wypożyczającego. Notyfikacje o terminie upływu itd 
+SQLite
+
+Django
+
+#jak z niego korzystać?
+
+użytkownik loguje się do aplikacji swoim loginem i hasłem. Użytkownik ma do wyboru nastepujące zakładki:
+
+1. Books:
+
+w tej zakładce można wyszukiwać książki po gatunkach po autorze tytule czy ID. Kiedy wypożyczający wysunie prośbę o zaporponowanie jakiejś ksiązki lub znalezieni konkretnej.
+
+2. Edit Book:
+
+użytkownik może edytować wpis dotyczący książki. Jeżeli poda istniejący ID książki wówczas nadpisze stary rekord w bazie danych. Jeżeli poda nowy ID nowa książka pojawi się w bazie. Pamiętajmy że możę być wiele egzemplarzy tej samej książki w bibliotece ale każda ma swój indywidualny ID.
+
+3. Edit Borrower:
+
+użytkownik może edytować wpis dotyczący wypożyczającego. Jeżeli poda istniejący ID wówczas nadpisze stary rekord w bazie danych. Jeżeli poda nowy ID nowy wypożyczający pojawi się w bazie. 
+
+4. Borrower:
+
+Tutaj wpisując ID wypożyczającego otrzymamy jego kartę z jego danymi osobowymi oraz z listą wypożyczonych książek. Książki których termin oddania został przekroczony zostaną wizualnie wyróżnione. Znajduje się również tam przycisk wypożycz który przekieruje do formularza wypożyczenia. Należy uzupełnić dane wypożyczenia aby zdarzenie wypożyczenia zostało zapisane do bazy danych
 
 
 
-main.py służy do testowania
 
-populate_db.create_test_data(library) 
-
-wypełnia bibliotekę przykładowymi wpisami
-
-#UWAGI DLA TYCH KTÓRZY BEDA ROBIC FRONTEND:
-
-zainicjuj obiekt typu Library
-
-o ile nie wypełnisz biblioteki jakimś testowymi danymi będzie ona pusta: 
-populate_db.create_test_data(library)
-
-wszystko co potrzebujesz jest w library.py
-
-metody które się tam znajdują obsługują najczęsciej wymagane czynności jak dodanie nowego wypożyczającego, nowej książki (pamiętaj o unikatowych ID!), także wypożyczenie,
-oddanie, listowanie wszystkich ksiązek listowanie wypożyczających znajdz wypozyczajacego czy ksiązkę po id
-
-musisz zbudować jakiś interfejs dla pracowników biblioteki. W backendzie mamy obiekt administrator. W bazie danych jest hasło admina
