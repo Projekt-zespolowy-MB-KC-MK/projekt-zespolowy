@@ -26,7 +26,7 @@ class Library:
 
         # Create administratrs table if it doesn't exist
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS admistrators (
+            CREATE TABLE IF NOT EXISTS administrators (
                 user_id INTEGER PRIMARY KEY,
                 name TEXT,
                 surname TEXT,
@@ -131,7 +131,6 @@ class Library:
         borrower.return_book(book)
         book.return_book()
         self.cursor.execute("DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?", (borrower.id, book.id))
-        self.cursor.execute("UPDATE books SET is_available = 1 WHERE id = ?", (book.id,))
         self.conn.commit()
 
     def lend_book_to_borrower(self, book, borrower, days=7):
@@ -255,7 +254,7 @@ class Library:
             return None
 
     def get_administrator_by_id(self, admin_id):
-        self.cursor.execute('SELECT * FROM adminstrators WHERE user_id = ?', (admin_id,))
+        self.cursor.execute('SELECT * FROM administrators WHERE user_id = ?', (admin_id,))
         result = self.cursor.fetchone()
         if result is not None:
             admin = Administrator(result[0], result[1], result[2], result[3], result[4], result[4])
