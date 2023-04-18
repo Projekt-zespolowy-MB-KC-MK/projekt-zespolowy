@@ -93,7 +93,7 @@ class Library:
             print("Administrator with this user ID already exists.")
             return None
 
-        self.cursor.execute('SELECT COUNT(*) FROM administrator WHERE name = ? AND surname = ?',
+        self.cursor.execute('SELECT COUNT(*) FROM administrators WHERE name = ? AND surname = ?',
                             (administrator.name, administrator.surname))
         count = self.cursor.fetchone()[0]
 
@@ -103,8 +103,8 @@ class Library:
 
         self.cursor.execute('''
             INSERT INTO administrators (user_id, name, surname, phone_number, email, password)
-            VALUES (?, ?, ?, ?, ?,?)
-        ''', (administrator.user_id, administrator.surname, administrator.phone_number, administrator.email,
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (administrator.user_id, administrator.name, administrator.surname, administrator.phone_number, administrator.email,
               administrator.password))
 
         self.conn.commit()
@@ -178,7 +178,7 @@ class Library:
 
             borrow = Borrow(borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
             borrow.print_info()
-            borrows.append(borrow) 
+            borrows.append(borrow)
 
         return borrows
 
