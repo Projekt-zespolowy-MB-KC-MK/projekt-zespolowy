@@ -128,10 +128,17 @@ class Library:
             self.conn.commit()
 
     def borrower_returns_book(self, borrower, book):
-        borrower.return_book(book)
-        book.return_book()
-        self.cursor.execute("DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?", (borrower.id, book.id))
+        self.cursor.execute("SELECT COUNT(*) FROM borrowed_books WHERE borrower_id = ? AND book_id = ?",
+                            (borrower.user_id, book.book_id))
+        count = self.cursor.fetchone()[0]
+
+        if count == 0:
+            print("This borrower didn't borrow this book.")
+            return None
+
+        self.cursor.execute("DELETE FROM borrowed_books WHERE borrower_id = ? AND book_id = ?", (borrower.user_id, book.book_id))
         self.conn.commit()
+        print("Book returned successfully.")
 
     def lend_book_to_borrower(self, book, borrower, days=7):
         self.cursor.execute("SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?", (book.book_id,))
@@ -249,7 +256,7 @@ class Library:
         return books
 
     def get_borrower_by_id(self, borrower_id):
-        self.cursor.execute('SELECT * FROM borrowers WHERE borrower_id = ?', (borrower_id,))
+        self.cursor.execute('SELECT * FROM borrowers WHERE user_id = ?', (borrower_id,))
         result = self.cursor.fetchone()
         if result is not None:
             borrower = Borrower(result[0], result[1], result[2], result[3], result[4])
