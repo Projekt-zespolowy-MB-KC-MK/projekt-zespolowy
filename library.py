@@ -93,7 +93,7 @@ class Library:
             print("Administrator with this user ID already exists.")
             return None
 
-        self.cursor.execute('SELECT COUNT(*) FROM administrator WHERE name = ? AND surname = ?',
+        self.cursor.execute('SELECT COUNT(*) FROM administrators WHERE name = ? AND surname = ?',
                             (administrator.name, administrator.surname))
         count = self.cursor.fetchone()[0]
 
@@ -103,8 +103,8 @@ class Library:
 
         self.cursor.execute('''
             INSERT INTO administrators (user_id, name, surname, phone_number, email, password)
-            VALUES (?, ?, ?, ?, ?,?)
-        ''', (administrator.user_id, administrator.surname, administrator.phone_number, administrator.email,
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (administrator.user_id, administrator.name, administrator.surname, administrator.phone_number, administrator.email,
               administrator.password))
 
         self.conn.commit()
@@ -128,10 +128,17 @@ class Library:
             self.conn.commit()
 
     def borrower_returns_book(self, borrower, book):
-        borrower.return_book(book)
-        book.return_book()
-        self.cursor.execute("DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?", (borrower.id, book.id))
+        self.cursor.execute("SELECT COUNT(*) FROM borrowed_books WHERE borrower_id = ? AND book_id = ?",
+                            (borrower.user_id, book.book_id))
+        count = self.cursor.fetchone()[0]
+
+        if count == 0:
+            print("This borrower didn't borrow this book.")
+            return None
+
+        self.cursor.execute("DELETE FROM borrowed_books WHERE borrower_id = ? AND book_id = ?", (borrower.user_id, book.book_id))
         self.conn.commit()
+        print("Book returned successfully.")
 
     def lend_book_to_borrower(self, book, borrower, days=7):
         self.cursor.execute("SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?", (book.book_id,))
@@ -178,7 +185,7 @@ class Library:
 
             borrow = Borrow(borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
             borrow.print_info()
-            borrows.append(borrow) 
+            borrows.append(borrow)
 
         return borrows
 
@@ -249,7 +256,7 @@ class Library:
         return books
 
     def get_borrower_by_id(self, borrower_id):
-        self.cursor.execute('SELECT * FROM borrowers WHERE borrower_id = ?', (borrower_id,))
+        self.cursor.execute('SELECT * FROM borrowers WHERE user_id = ?', (borrower_id,))
         result = self.cursor.fetchone()
         if result is not None:
             borrower = Borrower(result[0], result[1], result[2], result[3], result[4])

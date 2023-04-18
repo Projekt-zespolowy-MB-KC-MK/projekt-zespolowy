@@ -40,7 +40,7 @@ Tutaj wpisując ID wypożyczającego otrzymamy jego kartę z jego danymi osobowy
 
 #Notatki developera:
 
-w repozytorium nie ma gotowej bazy danych. Użyj create_test_data() z modułu populate_db aby zasiedlić bazę danych przykładowymi wpisami
+w repozytorium nie ma gotowej bazy danych. Użyj create_test_data() z modułu test aby zasiedlić bazę danych przykładowymi wpisami
 
 baza danych składa się z 4ch tablic:
 
