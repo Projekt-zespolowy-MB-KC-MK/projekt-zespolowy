@@ -178,9 +178,14 @@ class Library:
 
             borrow = Borrow(borrow_id, borrower_id, book_id, borrow_date, borrow_time, due_time)
             borrow.print_info()
-            borrows.append(borrow)
+            borrows.append(borrow) 
 
         return borrows
+
+    def is_book_borrowed(self, book_id):
+        self.cursor.execute('SELECT COUNT(*) FROM borrowed_books WHERE book_id = ?', (book_id,))
+        result = self.cursor.fetchone()
+        return result[0] > 0
 
     def get_all_borrowers(self, limit=None):
         query = '''
