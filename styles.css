@@ -50,7 +50,7 @@ nav {height: 50px;
     background-color: rgb(245, 222, 179);
 }
 nav input{
-    width: 275px;
+    width: 278px;
     height: 100%;
     margin: 0 10px 0 10px;
     background-color: rgba(194, 112, 49, 0.3);
@@ -89,6 +89,27 @@ section {
 }
 
 section table{
-    margin: 0 auto;
-    padding: 0 20px;
+    margin: auto;
+    border: 1px solid black;
 }
+
+section th{
+    padding: 0 50px;
+    border: 2px solid black;
+}
+section td{
+    border: 1px solid black;
+}
+
+/* section2 structure */
+.section2 {
+    height: 500px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    border: 1px solid white;
+    float: right;
+    text-align: center;
+}
+
+p {margin:10px; font-size: 26px;}
